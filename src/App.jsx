@@ -3,7 +3,7 @@ import { catStructure } from './home/categories'
 import RecursiveDivRenderer from './home/RecursiveDivRenderer'
 import TutorialDisplay from './home/TutorialDisplay'
 import './App.css'
-import ControlPanel from './home/ControlPanel'
+import ControlPanel from './home/ControlPanel' 
 
 function App() {
   
@@ -15,7 +15,7 @@ function App() {
 
   return (
     <div className='page-container'>
-      <div>
+      <div className='sidebar'>
         <RecursiveDivRenderer data={catStructure} onItemClick={onItemClick} />
       </div>
       <div className="tutorial-display">

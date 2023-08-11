@@ -1,0 +1,10 @@
+div.category {
+    border: 1px gray solid;
+    border-radius: 5px;
+    margin: 2px;
+    background: linear-gradient(rgb(255, 255, 255), rgb(240, 253, 253));
+}
+
+div.childdiv {
+    padding: 0 0 0 25px;
+}

@@ -1,6 +1,7 @@
 import React from 'react'
 import plus from '../assets/plus.png'
 import arrow from '../assets/arrow.png'
+import './ControlPanel.css'
 
 export default function ControlPanel() {
     const conPanBtns = [
@@ -25,18 +26,9 @@ export default function ControlPanel() {
     ];
 
     return (
-        // <div>
-        //     {conPanBtns.map((item) => (
-        //         // <div id={aBtn.id}>
-        //         //     <button className={aBtn.btnClass} onClick={aBtn.handleClick}>
-        //                 <img key={item.id} src={item.imgPath} />
-        //             // </button>
-        //         // </div>
-        //     ))}
-        // </div>
         <div>
             {conPanBtns.map((aBtn) => (
-                <div id={aBtn.id}>
+                <div key={aBtn.id}>
                     <button className={aBtn.btnClass} onClick={aBtn.handleClick}>
                         <img src={aBtn.imgPath} alt={aBtn.imgAlt} />
                     </button>
