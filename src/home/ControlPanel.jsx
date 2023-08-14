@@ -26,7 +26,7 @@ export default function ControlPanel() {
     ];
 
     return (
-        <div>
+        <>
             {conPanBtns.map((aBtn) => (
                 <div key={aBtn.id}>
                     <button className={aBtn.btnClass} onClick={aBtn.handleClick}>
@@ -34,6 +34,6 @@ export default function ControlPanel() {
                     </button>
                 </div>
             ))}
-        </div>
+        </>
     );
 }

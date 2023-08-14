@@ -1,31 +1,34 @@
 import React, { useState } from 'react'
-import { catStructure } from './home/categories'
-import RecursiveDivRenderer from './home/RecursiveDivRenderer'
-import TutorialDisplay from './home/TutorialDisplay'
+import { Link, Route, Routes } from 'react-router-dom'
 import './App.css'
-import ControlPanel from './home/ControlPanel' 
+import MyHome from './home/MyHome'
+import AddResource from './addresource/AddResource'
+import AddVideo from './addresource/AddVideo'
+import AddArticle from './addresource/AddArticle'
+import AddText from './addresource/AddText'
 
 function App() {
-  
-  const [divId, setDivId] = useState(null);
-
-  const onItemClick = (itemId) => {
-    setDivId(itemId)
-  };
-
   return (
-    <div className='page-container'>
-      <div className='sidebar'>
-        <RecursiveDivRenderer data={catStructure} onItemClick={onItemClick} />
-      </div>
-      <div className="tutorial-display">
-        <TutorialDisplay divId={divId}/>
-      </div>
-      <div>
-        <ControlPanel />
-      </div>
-      {/* <DivCreator catStructure={catStructure} /> */}
-    </div>
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link to='/'>Home</Link>
+          </li>
+          <li>
+            <Link to='addresource'>Add Resource</Link>
+          </li>
+        </ul> 
+      </nav>
+      <Routes>
+        <Route path='/' element={<MyHome />} />
+        <Route path='addresource' element={<AddResource />}>
+          <Route path='addvideo' element={<AddVideo />} />
+          <Route path='addarticle' element={<AddArticle />} />
+          <Route path='addtext' element={<AddText />} />
+        </Route>
+      </Routes>
+    </>
   )
 }
 
