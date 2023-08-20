@@ -3,9 +3,9 @@ import { catStructure } from "../home/Categories";
 import DropDownLogic from "./DropDownLogic";
 import axios from "axios";
 
-export default function AddVideo() {
-  const [text, setText] = useState("");
+export default function AddText() {
   const [title, setTitle] = useState("");
+  const [textInfo, setTextInfo] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
   const [category, setCategory] = useState("");
@@ -21,7 +21,7 @@ export default function AddVideo() {
     e.preventDefault();
     const selfPost = {
       title,
-      text,
+      textInfo,
       description,
       tags,
       category,
@@ -29,7 +29,7 @@ export default function AddVideo() {
       grandChildCategory,
       greatGrandChildCategory,
     };
-    // axios.post("http://localhost:3001/create", selfPost)
+    axios.post("http://localhost:3001/createTextPost", selfPost)
     console.log(selfPost);
   }
 
@@ -86,8 +86,8 @@ export default function AddVideo() {
       <label>
         Body:
         <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+          value={textInfo}
+          onChange={(e) => setTextInfo(e.target.value)}
         />
       </label>
       <label>

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Video = require("../models/Video");
+const Video = require("../models/VideoModel");
 
 router.route("/create").post((req, res) => {
     const title = req.body.title;

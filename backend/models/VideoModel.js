@@ -20,8 +20,13 @@ const videoSchema = new mongoose.Schema({
     cat2: String,
     cat3: String,
     cat4: String,
+    typeOfPost: {
+        type: String,
+        default: "Video",
+        immutable: true,
+    },
 });
 
-const Video = mongoose.model("Video", videoSchema);
+const VideoPost = mongoose.model("Video", videoSchema);
 
-module.exports = Video;
+module.exports = VideoPost;
