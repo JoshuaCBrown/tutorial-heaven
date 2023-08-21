@@ -29,7 +29,7 @@ export default function AddText() {
       grandChildCategory,
       greatGrandChildCategory,
     };
-    axios.post("http://localhost:3001/createTextPost", selfPost)
+    axios.post("http://localhost:3001/createtextpost", selfPost);
     console.log(selfPost);
   }
 

@@ -173,7 +173,7 @@ export const catStructure = [
         ],
     },
     {
-        category: 'Midset/Lifestyle',
+        category: 'Mindset/Lifestyle',
         id: 39,
     },
     {

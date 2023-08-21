@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { resources } from "../datafolder/resourcedata";
+// import { resources } from "../datafolder/resourcedata";
 import './TutorialDisplay.css'
+import axios from "axios";
+
 
 export default function TutorialDisplay({ divId }) {
   console.log(divId);

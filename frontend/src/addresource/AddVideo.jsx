@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { catStructure } from "../home/Categories";
 import DropDownLogic from "./DropDownLogic";
+import axios from "axios";
 
 export default function AddVideo() {
   const [link, setLink] = useState("");
@@ -28,6 +29,7 @@ export default function AddVideo() {
       grandChildCategory,
       greatGrandChildCategory,
     };
+    axios.post("http://localhost:3001/createvideopost", video);
     console.log(video);
   }
 
@@ -51,7 +53,6 @@ export default function AddVideo() {
     const selectedId = selection.getAttribute("id");
     const numId = parseFloat(selectedId);
     const selectedObj = findId(catStructure, numId);
-    // const selectedObj = catStructure.find((element) => element.id === numId);
     console.log(selectedObj);
 
     if (level === 1) {

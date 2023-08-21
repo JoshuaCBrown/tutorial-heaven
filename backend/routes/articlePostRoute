@@ -1,23 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const TextPost = require("../models/TextModel");
+const ArticlePost = require("../models/ArticleModel");
 
-router.route("/").post(async (req, res) => {
+router.route("/").post( async (req, res) => {
+  const link = req.body.link;
   const title = req.body.title;
-  const textInfo = req.body.textInfo;
   const description = req.body.description;
   const tags = req.body.tags;
   const cat1 = req.body.category;
   const cat2 = req.body.childCategory;
   const cat3 = req.body.grandChildCategory;
   const cat4 = req.body.greatGrandChildCategory;
-  const resourceType = "text";
+  const resourceType = "article";
   const collectionName = req.body.category.replace(/\s/g, "");
   try {
-    const TextModel = TextPost(collectionName);
-    const textPostRoute = new TextModel({
+    const ArticleModel = ArticlePost(collectionName);
+    const articlePostRoute = new ArticleModel({
+      link,
       title,
-      textInfo,
       description,
       tags,
       cat1,
@@ -26,7 +26,7 @@ router.route("/").post(async (req, res) => {
       cat4,
       resourceType,
     });
-    await textPostRoute.save();
+    await articlePostRoute.save();
     res.status(200).send("Post successfully added to database");
   } catch (err) {
     console.error(err);

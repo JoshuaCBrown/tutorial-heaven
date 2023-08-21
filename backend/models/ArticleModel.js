@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const videoPostSchema = new mongoose.Schema({
+const articlePostSchema = new mongoose.Schema({
     link: {
         type: String,
         required: true,
@@ -29,5 +29,5 @@ const videoPostSchema = new mongoose.Schema({
 
 
 module.exports = (collectionName) => {
-    return mongoose.model(collectionName, videoPostSchema)
+    return mongoose.model(collectionName, articlePostSchema)
 };

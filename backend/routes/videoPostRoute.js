@@ -1,23 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const TextPost = require("../models/TextModel");
+const VideoPost = require("../models/VideoModel");
 
 router.route("/").post(async (req, res) => {
+  const link = req.body.link;
   const title = req.body.title;
-  const textInfo = req.body.textInfo;
   const description = req.body.description;
   const tags = req.body.tags;
   const cat1 = req.body.category;
   const cat2 = req.body.childCategory;
   const cat3 = req.body.grandChildCategory;
   const cat4 = req.body.greatGrandChildCategory;
-  const resourceType = "text";
-  const collectionName = req.body.category.replace(/\s/g, "");
+  const resourceType = "video";
+  const collectionName = req.body.category.replace(/[ \/]/g, "");
   try {
-    const TextModel = TextPost(collectionName);
-    const textPostRoute = new TextModel({
+    const VideoModel = VideoPost(collectionName);
+    const videoPostRoute = new VideoModel({
+      link,
       title,
-      textInfo,
       description,
       tags,
       cat1,
@@ -26,7 +26,7 @@ router.route("/").post(async (req, res) => {
       cat4,
       resourceType,
     });
-    await textPostRoute.save();
+    await videoPostRoute.save();
     res.status(200).send("Post successfully added to database");
   } catch (err) {
     console.error(err);

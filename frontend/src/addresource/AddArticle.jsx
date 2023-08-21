@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { catStructure } from "../home/Categories";
 import DropDownLogic from "./DropDownLogic";
+import axios from "axios";
 
 export default function AddArticle() {
   const [link, setLink] = useState("");
@@ -18,7 +19,7 @@ export default function AddArticle() {
 
   function submitHandler(e) {
     e.preventDefault();
-    const article = {
+    const articlePost = {
       link,
       title,
       description,
@@ -28,7 +29,8 @@ export default function AddArticle() {
       grandChildCategory,
       greatGrandChildCategory,
     };
-    console.log(article);
+    axios.post("http://localhost:3001/createarticlepost", articlePost);
+    console.log(articlePost);
   }
 
   function findId(arr, idVal) {
