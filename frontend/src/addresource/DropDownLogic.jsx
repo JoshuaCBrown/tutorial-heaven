@@ -20,7 +20,7 @@ export default function DropDownLogic({
       >
         <option key="0" value="none"></option>
         {data.map((item) => (
-          <option id={item.id} key={item.id} value={item.category}>
+          <option id={item.id} key={item.id} value={item.id}>
             {item.category}
           </option>
         ))}

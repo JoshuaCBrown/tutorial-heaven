@@ -3,22 +3,16 @@ const mongoose = require('mongoose');
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const VideoModel = require("./models/VideoModel");
-const TextModel = require("./models/TextModel");
-const ArticleModel = require("./models/ArticleModel");
-const textRoute = require("./routes/textPostRoute");
-const articleRoute = require("./routes/articlePostRoute");
-const videoRoute = require("./routes/videoPostRoute");
+const postRoute = require("./routes/createPostRoute");
+const showRoute = require("./routes/showRoute")
 
 app.use(cors());
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI);
 
-app.use("/createarticlepost", articleRoute);
-app.use("/createtextpost", textRoute);
-app.use("/createvideopost", videoRoute);
-
+app.use("/createpost", postRoute);
+app.use("/show", showRoute);
 
 app.listen(3001, function() {
     console.log("Express server is running on port 3001");

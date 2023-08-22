@@ -19,6 +19,7 @@ export default function AddVideo() {
 
   function submitHandler(e) {
     e.preventDefault();
+    const typeOfPost = 'video';
     const video = {
       link,
       title,
@@ -28,8 +29,9 @@ export default function AddVideo() {
       childCategory,
       grandChildCategory,
       greatGrandChildCategory,
+      typeOfPost,
     };
-    axios.post("http://localhost:3001/createvideopost", video);
+    axios.post("http://localhost:3001/createpost", video);
     console.log(video);
   }
 
@@ -48,10 +50,14 @@ export default function AddVideo() {
   }
 
   function selectCatHandler(e, level) {
-    const index = e.target.selectedIndex;
-    const selection = e.target.childNodes[index];
-    const selectedId = selection.getAttribute("id");
+    // const index = e.target.selectedIndex;
+    // const selection = e.target.childNodes[index];
+    // const selectedId = selection.getAttribute("id");
+    // const numId = parseFloat(selectedId);
+    // const numId = e.target.value;
+    const selectedId = e.target.value;
     const numId = parseFloat(selectedId);
+    console.log(numId);
     const selectedObj = findId(catStructure, numId);
     console.log(selectedObj);
 

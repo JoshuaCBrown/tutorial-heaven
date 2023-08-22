@@ -19,6 +19,7 @@ export default function AddArticle() {
 
   function submitHandler(e) {
     e.preventDefault();
+    const typeOfPost = 'article';
     const articlePost = {
       link,
       title,
@@ -28,8 +29,9 @@ export default function AddArticle() {
       childCategory,
       grandChildCategory,
       greatGrandChildCategory,
+      typeOfPost,
     };
-    axios.post("http://localhost:3001/createarticlepost", articlePost);
+    axios.post("http://localhost:3001/createpost", articlePost);
     console.log(articlePost);
   }
 

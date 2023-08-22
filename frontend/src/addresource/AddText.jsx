@@ -19,6 +19,7 @@ export default function AddText() {
 
   function submitHandler(e) {
     e.preventDefault();
+    const typeOfPost = 'text';
     const selfPost = {
       title,
       textInfo,
@@ -28,8 +29,9 @@ export default function AddText() {
       childCategory,
       grandChildCategory,
       greatGrandChildCategory,
+      typeOfPost,
     };
-    axios.post("http://localhost:3001/createtextpost", selfPost);
+    axios.post("http://localhost:3001/createpost", selfPost);
     console.log(selfPost);
   }
 
