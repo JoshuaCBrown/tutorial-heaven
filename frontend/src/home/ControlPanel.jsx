@@ -1,7 +1,7 @@
 import React from 'react'
 import plus from '../assets/plus.png'
 import arrow from '../assets/arrow.png'
-import './ControlPanel.css'
+import './styles/ControlPanel.css'
 
 export default function ControlPanel() {
     const conPanBtns = [

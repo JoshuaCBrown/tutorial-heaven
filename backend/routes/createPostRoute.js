@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const PostModel = require("../models/PostModel");
+const ResourceModel = require("../models/ResourceModel");
 
 router.route("/").post( async (req, res) => {
   const link = req.body.link;
@@ -14,7 +14,7 @@ router.route("/").post( async (req, res) => {
   const typeOfPost = req.body.typeOfPost;
   const collectionName = req.body.category.replace(/\s/g, "");
   try {
-    const createNewPost = new PostModel({
+    const createNewPost = new ResourceModel({
       link,
       title,
       description,

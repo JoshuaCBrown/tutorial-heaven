@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./RecursiveDivRenderer.css";
+import "./styles/RecursiveDivRenderer.css";
 
 const RecursiveDivRenderer = ({ data, onItemClick }) => {
   const [expandedItems, setExpandedItems] = useState({});

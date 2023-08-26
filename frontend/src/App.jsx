@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Route, Routes } from 'react-router-dom'
-import './App.css'
+import './styles/App.css'
 import MyHome from './home/MyHome'
 import AddResource from './addresource/AddResource'
 import AddVideo from './addresource/AddVideo'

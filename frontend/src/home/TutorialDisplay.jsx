@@ -1,26 +1,87 @@
 import React, { useState, useEffect } from "react";
 // import { resources } from "../datafolder/resourcedata";
-import "./TutorialDisplay.css";
+import "./styles/TutorialDisplay.css";
+import axios from "axios";
 
 // const [currentSelection, setCurrentSelection] = useState("all");
 
-export default function TutorialDisplay({ divId }) {
+export default function TutorialDisplay({ divId, idArrays }) {
+  const selected = divId;
+  const parentIds = idArrays.parent;
+  const childIds = idArrays.child;
+  const gcIds = idArrays.grandchild;
+  const ggcIds = idArrays.greatgrandchild;
+
   const [posts, setPosts] = useState([
     {
       title: "",
       description: "",
+      cat1: "",
+      cat2: "",
+      cat3: "",
+      cat4: "",
     },
   ]);
 
+  const myQuery = () => {
+    if (selected !== null) {
+      if (parentIds.includes(selected)) {
+        return {
+          key: "cat1",
+          value: selected,
+        };
+      } else if (childIds.includes(selected)) {
+        return {
+          cat2: selected,
+        };
+      } else if (gcIds.includes(selected)) {
+        return {
+          cat3: selected,
+        };
+      } else if (ggcIds.includes(selected)) {
+        return {
+          cat4: selected,
+        };
+      }
+    } else {
+      return null;
+    }
+  };
+
+  const urlToUse = () => {
+    if (selected) {
+      return (
+        "http://localhost:3001/show/query?" + new URLSearchParams(myQuery())
+      );
+    } else {
+      return "http://localhost:3001/show";
+    }
+  };
+
+  const myUrl = urlToUse();
+
   useEffect(() => {
-    fetch("http://localhost:3001/show")
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+    console.log(myUrl);
+    axios
+      .get(myUrl)
+      .then((response) => {
+        console.log(response.data);
+        setPosts(response.data);
       })
-      .then((jsonRes) => setPosts(jsonRes));
-  });
+      .catch((error) => {
+        console.error("Error fetching posts", error);
+      });
+  }, [divId]);
+
+  // useEffect(() => {
+  //   fetch(myUrl)
+  //     .then((res) => {
+  //       if (res.ok) {
+  //         return res.json();
+  //       }
+  //     })
+  //     .then((jsonRes) => setPosts(jsonRes));
+  // }, [divId]);
 
   //   console.log(divId);
   //   function Displayer(x) {
@@ -47,6 +108,9 @@ export default function TutorialDisplay({ divId }) {
         <div key={post.title}>
           <h3>{post.title}</h3>
           <h4>{post.description}</h4>
+          <h5>
+            {post.cat1} {post.cat2} {post.cat3} {post.cat4}
+          </h5>
         </div>
       ))}
       {/* <Displayer x={divId} /> */}
