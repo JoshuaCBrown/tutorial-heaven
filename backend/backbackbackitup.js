@@ -5,6 +5,8 @@ const app = express();
 const cors = require("cors");
 const postRoute = require("./routes/createPostRoute");
 const showRoute = require("./routes/showRoute")
+const apiKey = process.env.YOUTUBE_APIKEY;
+baseApiUrl = "https://www.googleapis.com/youtube/v3";
 
 app.use(cors());
 app.use(express.json());
