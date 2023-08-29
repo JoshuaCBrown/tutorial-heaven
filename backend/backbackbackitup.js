@@ -1,10 +1,11 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
+require("dotenv").config();
+const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const postRoute = require("./routes/createPostRoute");
-const showRoute = require("./routes/showRoute")
+const showRoute = require("./routes/showRoute");
+const youTubeRoute = require("./routes/ytRoute");
 const apiKey = process.env.YOUTUBE_APIKEY;
 baseApiUrl = "https://www.googleapis.com/youtube/v3";
 
@@ -15,19 +16,13 @@ mongoose.connect(process.env.MONGO_URI);
 
 app.use("/createpost", postRoute);
 app.use("/show", showRoute);
+app.use("/ytapi", youTubeRoute);
 
-app.listen(3001, function() {
-    console.log("Express server is running on port 3001");
-})
-
-
-
-
-
+app.listen(3001, function () {
+  console.log("Express server is running on port 3001");
+});
 
 // console.log('hey');
-
-
 
 // saveVideo()
 
@@ -44,8 +39,3 @@ app.listen(3001, function() {
 //         console.log(e.errors)
 //     }
 // }
-
-
-
-
-
