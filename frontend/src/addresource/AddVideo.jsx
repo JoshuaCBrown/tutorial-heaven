@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { catStructure } from "../home/Categories";
 import DropDownLogic from "./DropDownLogic";
 import axios from "axios";
@@ -34,6 +34,18 @@ export default function AddVideo() {
     axios.post("http://localhost:3001/createpost", video);
     console.log(video);
   }
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/ytapi")
+      .then((response) => {
+        console.log(response.data);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error fetching api", error);
+      });
+  }, []);
 
   function findId(arr, idVal) {
     for (const obj of arr) {
