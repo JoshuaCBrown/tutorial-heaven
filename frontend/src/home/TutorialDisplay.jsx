@@ -32,15 +32,18 @@ export default function TutorialDisplay({ divId, idArrays }) {
         };
       } else if (childIds.includes(selected)) {
         return {
-          cat2: selected,
+          key: "cat2",
+          value: selected,
         };
       } else if (gcIds.includes(selected)) {
         return {
-          cat3: selected,
+          key: "cat3",
+          value: selected,
         };
       } else if (ggcIds.includes(selected)) {
         return {
-          cat4: selected,
+          key: "cat4",
+          value: selected,
         };
       }
     } else {

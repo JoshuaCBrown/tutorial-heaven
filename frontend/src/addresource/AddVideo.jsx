@@ -17,9 +17,16 @@ export default function AddVideo() {
   const [grandChildObj, setGrandChildObj] = useState("");
   const [greatGrandChildObj, setGreatGrandChildObj] = useState("");
 
+  //api state variable
+  const [ytInfo, setYtInfo] = useState({
+    title: "",
+    description: "",
+    coverImg: "",
+  });
+
   function submitHandler(e) {
     e.preventDefault();
-    const typeOfPost = 'video';
+    const typeOfPost = "video";
     const video = {
       link,
       title,
@@ -39,8 +46,8 @@ export default function AddVideo() {
     axios
       .get("http://localhost:3001/ytapi")
       .then((response) => {
+        setYtInfo(response.data);
         console.log(response.data);
-        console.log(response);
       })
       .catch((error) => {
         console.error("Error fetching api", error);
@@ -166,6 +173,9 @@ export default function AddVideo() {
         />
       )}
       <input type="submit" onClick={submitHandler} />
+      <h1>{ytInfo.title}</h1>
+      <h2>{ytInfo.description}</h2>
+      <img src={ytInfo.coverImg} />
     </form>
   );
 }
