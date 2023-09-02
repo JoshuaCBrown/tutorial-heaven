@@ -5,8 +5,9 @@ const apiKey = process.env.YOUTUBE_APIKEY;
 const axios = require("axios");
 baseApiUrl = "https://www.googleapis.com/youtube/v3";
 
-router.route("/").get(async (req, res) => {
-  const videoId = "Ks-_Mh1QhMc";
+router.route("/query").get(async (req, res) => {
+  console.log(req.query.youtubeId);
+  const videoId = req.query.youtubeId;
   const url = `${baseApiUrl}/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${apiKey}`;
   const response = await axios.get(url);
   const vid = {

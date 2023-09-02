@@ -16,12 +16,17 @@ export default function AddVideo() {
   const [childObj, setChildObj] = useState("");
   const [grandChildObj, setGrandChildObj] = useState("");
   const [greatGrandChildObj, setGreatGrandChildObj] = useState("");
+  const [ytId, setYtId] = useState({
+    youtubeId: "",
+  });
 
   //api state variable
   const [ytInfo, setYtInfo] = useState({
     title: "",
     description: "",
     coverImg: "",
+    coverWidth: "",
+    coverHeight: "",
   });
 
   function submitHandler(e) {
@@ -43,16 +48,17 @@ export default function AddVideo() {
   }
 
   useEffect(() => {
+    const ytApiUrl = "http://localhost:3001/ytapi/query?" + new URLSearchParams(ytId);
     axios
-      .get("http://localhost:3001/ytapi")
+      .get(ytApiUrl)
       .then((response) => {
-        setYtInfo(response.data);
         console.log(response.data);
+        ytInfoSetter(response.data);
       })
       .catch((error) => {
         console.error("Error fetching api", error);
       });
-  }, []);
+  }, [ytId]);
 
   function findId(arr, idVal) {
     for (const obj of arr) {
@@ -97,6 +103,17 @@ export default function AddVideo() {
     }
   }
 
+  function callYtApi() {
+    const formUrl = link;
+    const reg =  new RegExp('(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})','i');
+    const matcher = formUrl.match(reg);
+    if (matcher[1]) {
+      setYtId({
+        youtubeId: matcher[1],
+      })
+    }
+  }
+
   return (
     <form>
       <label>
@@ -105,6 +122,7 @@ export default function AddVideo() {
           type="text"
           value={link}
           onChange={(e) => setLink(e.target.value)}
+          onBlur={(e) => callYtApi()}
         />
       </label>
       <label>
