@@ -1,0 +1,9 @@
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+input[type=submit] {
+  grid-column: span 2;
+}

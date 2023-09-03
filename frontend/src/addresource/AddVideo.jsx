@@ -17,7 +17,7 @@ export default function AddVideo() {
   const [grandChildObj, setGrandChildObj] = useState("");
   const [greatGrandChildObj, setGreatGrandChildObj] = useState("");
   const [ytId, setYtId] = useState({
-    youtubeId: "",
+    youtubeId: null,
   });
 
   //api state variable
@@ -25,8 +25,8 @@ export default function AddVideo() {
     title: "",
     description: "",
     coverImg: "",
-    coverWidth: "",
-    coverHeight: "",
+    imgWidth: "",
+    imgHeight: "",
   });
 
   function submitHandler(e) {
@@ -48,16 +48,21 @@ export default function AddVideo() {
   }
 
   useEffect(() => {
-    const ytApiUrl = "http://localhost:3001/ytapi/query?" + new URLSearchParams(ytId);
-    axios
-      .get(ytApiUrl)
-      .then((response) => {
-        console.log(response.data);
-        ytInfoSetter(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching api", error);
-      });
+    const ytApiUrl =
+      "http://localhost:3001/ytapi/query?" + new URLSearchParams(ytId);
+    if (ytId.youtubeId !== null) {
+      axios
+        .get(ytApiUrl)
+        .then((response) => {
+          console.log(response.data);
+          setYtInfo(response.data);
+          setTitle(response.data.title);
+          setDescription(response.data.description);
+        })
+        .catch((error) => {
+          console.error("Error fetching api", error);
+        });
+    }
   }, [ytId]);
 
   function findId(arr, idVal) {
@@ -105,14 +110,22 @@ export default function AddVideo() {
 
   function callYtApi() {
     const formUrl = link;
-    const reg =  new RegExp('(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})','i');
+    const reg = new RegExp(
+      '(?:youtube(?:-nocookie)?.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu.be/)([^"&?/s]{11})',
+      "i"
+    );
     const matcher = formUrl.match(reg);
     if (matcher[1]) {
       setYtId({
         youtubeId: matcher[1],
-      })
+      });
     }
   }
+
+  const imgStyle = {
+    height: ytInfo.imgHeight + "px",
+    width: ytInfo.imgWidth + "px",
+  };
 
   return (
     <form>
@@ -191,9 +204,7 @@ export default function AddVideo() {
         />
       )}
       <input type="submit" onClick={submitHandler} />
-      <h1>{ytInfo.title}</h1>
-      <h2>{ytInfo.description}</h2>
-      <img src={ytInfo.coverImg} />
+      {link && <img src={ytInfo.coverImg} style={imgStyle} />}
     </form>
   );
 }

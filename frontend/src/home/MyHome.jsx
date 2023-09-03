@@ -16,6 +16,12 @@ function MyHome() {
     greatgrandchild: null,
   });
 
+  const startingExpansion = {
+    0: null,
+  };
+
+  const [expandedDivs, setExpandedDivs] = useState(startingExpansion);
+
   const onItemClick = (itemId) => {
     setDivId(itemId);
   };
@@ -32,12 +38,11 @@ function MyHome() {
       </div>
       <div className="page-container">
         <div className="sidebar">
-          <RecursiveDivRenderer data={catStructure} onItemClick={onItemClick} />
+          <RecursiveDivRenderer data={catStructure} onItemClick={onItemClick} depth={0} expandedDivs={expandedDivs} setExpandedDivs={setExpandedDivs} divId={divId} />
         </div>
         <div className="tutorial-display">
           <TutorialDisplay divId={divId} idArrays={idArrays}/>
         </div>
-
         {/* <DivCreator catStructure={catStructure} /> */}
       </div>
     </div>

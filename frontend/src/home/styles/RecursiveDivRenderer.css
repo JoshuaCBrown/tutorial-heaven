@@ -8,3 +8,7 @@ div.category {
 div.childdiv {
     padding: 0 0 0 25px;
 }
+
+.selected {
+    background-color: red;
+}

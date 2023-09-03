@@ -1,6 +1,9 @@
 export const catStructure = [
 //highest id val = "58" 8/13/23
-
+    {
+        category: 'All',
+        id: 'all',
+    },
     {
         category: 'Instruments',
         id: 1,

@@ -6,6 +6,7 @@ import AddResource from './addresource/AddResource'
 import AddVideo from './addresource/AddVideo'
 import AddArticle from './addresource/AddArticle'
 import AddText from './addresource/AddText'
+import Login from './authentication/login'
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           <li>
             <Link to='addresource'>Add Resource</Link>
           </li>
+          <li>
+            <Link to='login'>Login</Link>
+          </li>
         </ul> 
       </nav>
       <Routes>
@@ -27,6 +31,7 @@ function App() {
           <Route path='addarticle' element={<AddArticle />} />
           <Route path='addtext' element={<AddText />} />
         </Route>
+        <Route path='login' element={<Login />} />
       </Routes>
     </>
   )
