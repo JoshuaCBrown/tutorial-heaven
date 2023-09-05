@@ -8,6 +8,12 @@ import AddArticle from './addresource/AddArticle'
 import AddText from './addresource/AddText'
 import Login from './authentication/login'
 
+const [username, setUsername] = useState(null);
+
+function userIsAuth() {
+  
+}
+
 function App() {
   return (
     <>
@@ -20,7 +26,7 @@ function App() {
             <Link to='addresource'>Add Resource</Link>
           </li>
           <li>
-            <Link to='login'>Login</Link>
+            <Link to='login'>{userIsAuth ? username : "Login/Register"}</Link>
           </li>
         </ul> 
       </nav>
