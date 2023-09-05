@@ -1,12 +1,13 @@
 import { React, useState } from "react";
-import './styles/login.css'
+import './styles/authentication.css'
+import axios from "axios";
 
-
-export default function Login() {
+export default function Register() {
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   
 
   function checkValidity(stateSetter, str, regexVal) {
@@ -33,9 +34,13 @@ export default function Login() {
     <>
       <form>
         <label>Username: </label>
-        <input type="text"></input>
+        <input type="text" />
+        <label>Email: </label>
+        <input type="email" />
         <label>Password: </label>
-        <input type="password" />    
+        <input type="password" />
+        <label>Repeat Password: </label>
+        <input type="password" />
         <input type="submit" onClick={submitHandler} />
       </form>
     </>
