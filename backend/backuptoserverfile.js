@@ -1,3 +1,4 @@
+
 require("dotenv").config();
 const mongoose = require("mongoose");
 const express = require("express");
@@ -15,16 +16,8 @@ const methodOverride = require("method-override");
 const postRoute = require("./routes/createPostRoute");
 const showRoute = require("./routes/showRoute");
 const youTubeRoute = require("./routes/ytRoute");
-const baseApiUrl = "https://www.googleapis.com/youtube/v3";
 const apiKey = process.env.YOUTUBE_APIKEY;
-const secretKey = process.env.SESSION_SECRET;
-
-const User = require("./models/UserModel")
-
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const baseApiUrl = "https://www.googleapis.com/youtube/v3";
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,19 +27,10 @@ app.use(
     credentials: true,
   })
 );
-app.use(
-  session({
-    secret: secretKey,
-    resave: true,
-    saveUnitialized: true,
-  })
-);
-app.use(cookieParser(secretKey));
-app.use(passport.initialize());
-app.use(passport.session());
-require("./passport-config")(passport);
 
-//app.use(express.json());
+app.use(express.json());
+
+mongoose.connect(process.env.MONGO_URI);
 
 app.use("/createpost", postRoute);
 app.use("/show", showRoute);
