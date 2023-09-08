@@ -54,16 +54,16 @@ export default function Register() {
         <input type="text" onChange={(e) => setFormUsername(e.target.value)} />
         <label>Email: </label>
         <input
-          type="email"
+          type="text"
           onChange={(e) => setFormEmail(e.target.value)}
-          onBlur={checkValidity(email, emailRegEx, emailClass)}
+          onBlur={checkValidity(formEmail, emailRegEx, emailClass)}
           className={emailClass}
         />
         <label>Password: </label>
         <input
           type="password"
           onChange={(e) => setFormPassword(e.target.value)}
-          onBlur={checkValidity(password, passwordRegEx, passClass)}
+          onBlur={checkValidity(formPassword, passwordRegEx, passClass)}
           className={passClass}
         />
         <label>Repeat Password: </label>

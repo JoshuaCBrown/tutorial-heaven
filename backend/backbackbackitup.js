@@ -15,11 +15,12 @@ const methodOverride = require("method-override");
 const postRoute = require("./routes/createPostRoute");
 const showRoute = require("./routes/showRoute");
 const youTubeRoute = require("./routes/ytRoute");
+const registerRoute = require("./routes/registerRoute");
+const loginRoute = require("./routes/loginRoute");
+
 const baseApiUrl = "https://www.googleapis.com/youtube/v3";
 const apiKey = process.env.YOUTUBE_APIKEY;
 const secretKey = process.env.SESSION_SECRET;
-
-const User = require("./models/UserModel")
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -38,7 +39,7 @@ app.use(
   session({
     secret: secretKey,
     resave: true,
-    saveUnitialized: true,
+    saveUninitialized: true,
   })
 );
 app.use(cookieParser(secretKey));
@@ -51,6 +52,8 @@ require("./passport-config")(passport);
 app.use("/createpost", postRoute);
 app.use("/show", showRoute);
 app.use("/ytapi", youTubeRoute);
+app.use("/register", registerRoute);
+app.use("/login", loginRoute);
 
 app.listen(3001, function () {
   console.log("Express server is running on port 3001");

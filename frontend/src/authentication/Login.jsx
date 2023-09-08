@@ -1,15 +1,14 @@
 import { React, useState } from "react";
 import "./styles/auth.css";
+import axios from "axios";
 
 export default function Login() {
-
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  
+
   //use react-hook-form and zod resolver or yup library to validate form input
 
-
-  const submitHandler = () => {
+  const submitHandler = (e) => {
     axios({
       method: "POST",
       data: {
@@ -21,18 +20,16 @@ export default function Login() {
     }).then((res) => console.log(res));
   };
 
-
   return (
     <>
       <form>
-        <label>Username: </label>
-        <input
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={checkValidity(email, emailRegEx, emailClass)}
-        />
+        <label>Email: </label>
+        <input type="text" onChange={(e) => setLoginEmail(e.target.value)} />
         <label>Password: </label>
-        <input type="password" />
+        <input
+          type="password"
+          onChange={(e) => setLoginPassword(e.target.value)}
+        />
         <input type="submit" onClick={submitHandler} />
       </form>
     </>

@@ -1,44 +1,49 @@
 
-require("dotenv").config();
-const mongoose = require("mongoose");
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const bcrypt = require("bcrypt");
-const passport = require("passport");
-const passportLocal = require("passport-local");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const flash = require("express-flash");
-const session = require("express-session");
-const methodOverride = require("method-override");
+// require("dotenv").config();
+// const mongoose = require("mongoose");
+// const express = require("express");
+// const app = express();
+// const cors = require("cors");
+// const bcrypt = require("bcrypt");
+// const passport = require("passport");
+// const passportLocal = require("passport-local");
+// const cookieParser = require("cookie-parser");
+// const bodyParser = require("body-parser");
+// const flash = require("express-flash");
+// const session = require("express-session");
+// const methodOverride = require("method-override");
 
-const postRoute = require("./routes/createPostRoute");
-const showRoute = require("./routes/showRoute");
-const youTubeRoute = require("./routes/ytRoute");
-const apiKey = process.env.YOUTUBE_APIKEY;
-const baseApiUrl = "https://www.googleapis.com/youtube/v3";
+// const postRoute = require("./routes/createPostRoute");
+// const showRoute = require("./routes/showRoute");
+// const youTubeRoute = require("./routes/ytRoute");
+// const apiKey = process.env.YOUTUBE_APIKEY;
+// const baseApiUrl = "https://www.googleapis.com/youtube/v3";
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173",
+//     credentials: true,
+//   })
+// );
 
-app.use(express.json());
+// app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI);
+// mongoose.connect(process.env.MONGO_URI);
 
-app.use("/createpost", postRoute);
-app.use("/show", showRoute);
-app.use("/ytapi", youTubeRoute);
+// app.use("/createpost", postRoute);
+// app.use("/show", showRoute);
+// app.use("/ytapi", youTubeRoute);
 
-app.listen(3001, function () {
-  console.log("Express server is running on port 3001");
-});
+// app.listen(3001, function () {
+//   console.log("Express server is running on port 3001");
+// });
+
+
+
+
+//-------------------------OLD CODE----------------------------------------//
 
 // console.log('hey');
 
