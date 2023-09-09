@@ -45,7 +45,12 @@ app.use(
 app.use(cookieParser(secretKey));
 app.use(passport.initialize());
 app.use(passport.session());
-require("./passport-config")(passport);
+const passportInit = require("./passport-config");
+passportInit(
+  passport, 
+  email => userModel.findOne((user) => user.email === email),
+  id => userModel.findOne((user) => user.id === id),
+);
 
 //app.use(express.json());
 
@@ -53,7 +58,14 @@ app.use("/createpost", postRoute);
 app.use("/show", showRoute);
 app.use("/ytapi", youTubeRoute);
 app.use("/register", registerRoute);
-app.use("/login", loginRoute);
+// app.use("/login", loginRoute);
+app.post("/login", passport.authenticate("local", 
+  {
+    successRedirect: '/register',
+    failureRedirect: '/',
+    failureMessage: true,
+  }
+));
 
 app.listen(3001, function () {
   console.log("Express server is running on port 3001");

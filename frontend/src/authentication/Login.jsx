@@ -8,7 +8,7 @@ export default function Login() {
 
   //use react-hook-form and zod resolver or yup library to validate form input
 
-  const submitHandler = (e) => {
+  const submitHandler = () => {
     axios({
       method: "POST",
       data: {
@@ -22,7 +22,7 @@ export default function Login() {
 
   return (
     <>
-      <form>
+      <div>
         <label>Email: </label>
         <input type="text" onChange={(e) => setLoginEmail(e.target.value)} />
         <label>Password: </label>
@@ -30,8 +30,8 @@ export default function Login() {
           type="password"
           onChange={(e) => setLoginPassword(e.target.value)}
         />
-        <input type="submit" onClick={submitHandler} />
-      </form>
+        <button onClick={submitHandler}>Submit</button>
+      </div>
     </>
   );
 }
