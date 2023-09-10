@@ -12,11 +12,13 @@ const flash = require("express-flash");
 const session = require("express-session");
 const methodOverride = require("method-override");
 
+const userModel = require("./models/UserModel");
 const postRoute = require("./routes/createPostRoute");
 const showRoute = require("./routes/showRoute");
 const youTubeRoute = require("./routes/ytRoute");
 const registerRoute = require("./routes/registerRoute");
 const loginRoute = require("./routes/loginRoute");
+const userRoute = require("./routes/getUserRoute")
 
 const baseApiUrl = "https://www.googleapis.com/youtube/v3";
 const apiKey = process.env.YOUTUBE_APIKEY;
@@ -35,6 +37,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser(secretKey));
 app.use(
   session({
     secret: secretKey,
@@ -42,14 +45,43 @@ app.use(
     saveUninitialized: true,
   })
 );
-app.use(cookieParser(secretKey));
+
 app.use(passport.initialize());
 app.use(passport.session());
 const passportInit = require("./passport-config");
+const { deleteOne } = require("./models/ResourceModel");
 passportInit(
-  passport, 
-  email => userModel.findOne((user) => user.email === email),
-  id => userModel.findOne((user) => user.id === id),
+  passport,
+  async (email) => {
+    try {
+      const authUser = await userModel.findOne({ email: email });
+      console.log(authUser);
+      return authUser || null;
+      } catch (err) {
+      console.error(err);
+    }
+  },
+  async (id) => {
+    try {
+      const authUser = await userModel.findById({ _id: id });
+      console.log(authUser);
+      return authUser._id || null;
+    } catch (err) {
+      console.error(err);
+    }
+  },
+  // (id) => {
+  //   userModel.findOne({ _id: id }, (err, user) => {
+  //     if (err) {
+  //       console.error(err);
+  //     }
+  //     if (!user) {
+  //       return null, false;
+  //     } else {
+  //       return null, user;
+  //     }
+  //   });
+  // }
 );
 
 //app.use(express.json());
@@ -59,17 +91,50 @@ app.use("/show", showRoute);
 app.use("/ytapi", youTubeRoute);
 app.use("/register", registerRoute);
 // app.use("/login", loginRoute);
-app.post("/login", passport.authenticate("local", 
-  {
-    successRedirect: '/register',
-    failureRedirect: '/',
-    failureMessage: true,
+app.post(
+  "/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) throw err;
+    if (!user) res.send("No user exists!")
+    else {
+      req.login(user, err => {
+        if (err) throw err;
+        res.send('Successfully Authenticated');
+        console.log(req.user);
+        next();
+      })
+    }
+  })(req, res, next);
+});
+
+app.get("/user", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.send("user authenticated");
+  } else {
+    res.send("no user authenticated");
   }
-));
+});
+
+app.post("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.error(err);
+    }
+    res.send("You are now logged out");
+  })
+})
+
+// app.use("/user", userRoute);
 
 app.listen(3001, function () {
   console.log("Express server is running on port 3001");
 });
+
+// app.get("/user", (req, res, next) => {
+//   if (req.isAuthenticated()) {
+//     res.redirect('/')
+//   }
+// })
 
 // console.log('hey');
 

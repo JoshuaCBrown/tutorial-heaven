@@ -4,6 +4,7 @@ const userModel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 
+
 router.post("/", (req, res, next) => {
   passport.authenticate("local", 
   {

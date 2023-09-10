@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "backbackbackitup.js",
+  "main": "babygotbackend.js",
   "scripts": {
-    "devStart": "nodemon backbackbackitup.js"
+    "devStart": "nodemon babygotbackend.js"
   },
   "keywords": [],
   "author": "",

@@ -5,20 +5,44 @@ import axios from "axios";
 export default function Login() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [authStatus, setAuthStatus] = useState("");
 
   //use react-hook-form and zod resolver or yup library to validate form input
 
   const submitHandler = () => {
+    const loginData = {
+      email: loginEmail,
+      password: loginPassword,
+    };
     axios({
       method: "POST",
-      data: {
-        email: loginEmail,
-        password: loginPassword,
-      },
+      data: loginData,
       withCredentials: true,
       url: "http://localhost:3001/login",
     }).then((res) => console.log(res));
   };
+
+  const checkAuth = () => {
+    axios({
+      method: "get",
+      withCredentials: true,
+      url: "http://localhost:3001/user",
+    }).then((res) => {
+      console.log(res.data);
+      setAuthStatus(res.data);
+    });
+  };
+
+  const logOut = () => {
+    axios({
+      method: "post",
+      withCredentials: true,
+      url: "http://localhost:3001/logout",
+    }).then((res) => {
+      console.log(res.data);
+    })
+    };
+  
 
   return (
     <>
@@ -31,6 +55,9 @@ export default function Login() {
           onChange={(e) => setLoginPassword(e.target.value)}
         />
         <button onClick={submitHandler}>Submit</button>
+        <button onClick={checkAuth}>Check Auth</button>
+        <button onClick={logOut}>Log out</button>
+        <div>{authStatus}</div>
       </div>
     </>
   );

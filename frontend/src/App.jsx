@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import "./styles/App.css";
 import MyHome from "./home/MyHome";
@@ -9,13 +9,35 @@ import AddText from "./addresource/AddText";
 import Auth from "./authentication/Auth";
 import Login from "./authentication/Login";
 import Register from "./authentication/Register";
-
-
+import axios from "axios";
 
 function App() {
   const [username, setUsername] = useState(null);
+  const [authStatus, setAuthStatus] = useState("none");
 
-  const userIsAuth = () => "Login/Register"
+  const IsAuth = () => {
+    axios.get("http://localhost:3001/user").then((res) => {
+      console.log(res.data);
+      setAuthStatus(res.data);
+      return (
+        <p>{res.data}</p>
+      );
+    });
+  }
+  useEffect(() => {
+    axios({
+        method: "get",
+        withCredentials: true,
+        url: "http://localhost:3001/user"
+      })
+      .then((response) => {
+        console.log(response.data);
+        setAuthStatus(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching authentication", error);
+      });
+  }, []);
 
   return (
     <>
@@ -30,6 +52,7 @@ function App() {
           <li>
             <Link to="auth">Login/Register</Link>
           </li>
+          <li>{authStatus}</li>
         </ul>
       </nav>
       <Routes>
@@ -39,7 +62,7 @@ function App() {
           <Route path="addarticle" element={<AddArticle />} />
           <Route path="addtext" element={<AddText />} />
         </Route>
-        <Route path="auth" element={<Auth />} >
+        <Route path="auth" element={<Auth />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>
