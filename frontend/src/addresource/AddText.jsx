@@ -22,8 +22,8 @@ export default function AddText() {
     const typeOfPost = 'text';
     const selfPost = {
       title,
-      textInfo,
       description,
+      textInfo,
       tags,
       category,
       childCategory,

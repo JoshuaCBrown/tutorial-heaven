@@ -5,12 +5,9 @@ const createResourceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  link: {
-    type: String,
-  },
-  textInfo: {
-    type: String,
-  },
+  link: String,
+  videoId: String,
+  textInfo: String,
   description: String,
   tags: [String],
   cat1: String,
@@ -22,9 +19,11 @@ const createResourceSchema = new mongoose.Schema({
     default: () => Date.now(),
     immutable: true,
   },
-  typeOfPost: {
-    type: String,
-  },
+  typeOfPost: String,
+  postScore: Number,
+  vidThumbnail: String,
+  vidWidth: Number,
+  vidHeight: Number,
 });
 
 module.exports = mongoose.model("resource", createResourceSchema);

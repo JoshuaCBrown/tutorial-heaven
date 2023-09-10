@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { resources } from "../datafolder/resourcedata";
 import "./styles/TutorialDisplay.css";
 import axios from "axios";
+import TutContainer from "./TutContainer"
 
 // const [currentSelection, setCurrentSelection] = useState("all");
 
@@ -12,19 +13,30 @@ export default function TutorialDisplay({ divId, idArrays }) {
   const gcIds = idArrays.grandchild;
   const ggcIds = idArrays.greatgrandchild;
 
-  const [posts, setPosts] = useState([
-    {
-      title: "",
-      description: "",
-      cat1: "",
-      cat2: "",
-      cat3: "",
-      cat4: "",
-    },
-  ]);
+  //state to store response from db, an array of post objects
+  const [posts, setPosts] = useState(
+    [
+      {
+        title: "",
+        link: "",
+        description: "",
+        textInfo: "",
+        tags: "",
+        cat1: "",
+        cat2: "",
+        cat3: "",
+        cat4: "",
+        typeOfPost: "",
+        postScore: "",
+        vidThumbnail: {},
+        videoId: "",
+      },
+    ]
+  );
 
+  //determines key value pair for db query based on selected category and depth
   const myQuery = () => {
-    if (selected !== null) {
+    if (selected !== null && selected !== 'all') {
       if (parentIds.includes(selected)) {
         return {
           key: "cat1",
@@ -52,7 +64,7 @@ export default function TutorialDisplay({ divId, idArrays }) {
   };
 
   const urlToUse = () => {
-    if (selected) {
+    if (selected && selected !== 'all') {
       return (
         "http://localhost:3001/show/query?" + new URLSearchParams(myQuery())
       );
@@ -107,15 +119,14 @@ export default function TutorialDisplay({ divId, idArrays }) {
 
   return (
     <div>
-      {posts.map((post) => (
-        <div key={post.title}>
-          <h3>{post.title}</h3>
-          <h4>{post.description}</h4>
-          <h5>
-            {post.cat1} {post.cat2} {post.cat3} {post.cat4}
-          </h5>
-        </div>
-      ))}
+      <ul>
+        {posts.map((post) => (
+          <li>
+            <TutContainer post={post} />
+          </li>
+        ))}
+      </ul>
+      
       {/* <Displayer x={divId} /> */}
     </div>
   );

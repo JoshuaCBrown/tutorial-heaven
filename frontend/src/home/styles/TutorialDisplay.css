@@ -1,6 +1,44 @@
+ul {
+  list-style-type: none;
+  margin: none;
+  padding: 0;
+  gap: 0;
+}
+
+div.tutdiv {
+  border: 2px gray solid;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  grid-template-areas: "myicon title score";
+}
+
+div.icondiv {
+  grid-area: myicon;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.scorediv h2 {
+    padding: 0;
+    margin: -15px;
+}
 
 
-div.linkDiv {
-    border: 2px gray solid;
-    border-radius: 20px;
+div.scorediv img {
+    padding: 0;
+    margin: 0;
+}
+
+img.uparrow {
+  transform: rotate(90deg);
+}
+
+img.downarrow {
+  transform: rotate(-90deg);
+}
+
+div.tutdiv > h1 {
+  font-size: 20px;
 }

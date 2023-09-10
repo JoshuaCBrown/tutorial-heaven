@@ -18,7 +18,7 @@ const showRoute = require("./routes/showRoute");
 const youTubeRoute = require("./routes/ytRoute");
 const registerRoute = require("./routes/registerRoute");
 const loginRoute = require("./routes/loginRoute");
-const userRoute = require("./routes/getUserRoute")
+const userRoute = require("./routes/getUserRoute");
 
 const baseApiUrl = "https://www.googleapis.com/youtube/v3";
 const apiKey = process.env.YOUTUBE_APIKEY;
@@ -29,6 +29,7 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
@@ -57,7 +58,7 @@ passportInit(
       const authUser = await userModel.findOne({ email: email });
       console.log(authUser);
       return authUser || null;
-      } catch (err) {
+    } catch (err) {
       console.error(err);
     }
   },
@@ -69,7 +70,7 @@ passportInit(
     } catch (err) {
       console.error(err);
     }
-  },
+  }
   // (id) => {
   //   userModel.findOne({ _id: id }, (err, user) => {
   //     if (err) {
@@ -91,19 +92,18 @@ app.use("/show", showRoute);
 app.use("/ytapi", youTubeRoute);
 app.use("/register", registerRoute);
 // app.use("/login", loginRoute);
-app.post(
-  "/login", (req, res, next) => {
+app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
-    if (!user) res.send("No user exists!")
+    if (!user) res.send("No user exists!");
     else {
-      req.login(user, err => {
+      req.login(user, (err) => {
         if (err) throw err;
         const name = req.user.username;
         res.send(name);
         console.log(req.user);
         next();
-      })
+      });
     }
   })(req, res, next);
 });
@@ -123,8 +123,8 @@ app.post("/logout", (req, res) => {
       console.error(err);
     }
     res.send("You are now logged out");
-  })
-})
+  });
+});
 
 // app.use("/user", userRoute);
 

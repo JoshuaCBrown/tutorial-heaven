@@ -32,6 +32,10 @@ export default function AddVideo() {
   function submitHandler(e) {
     e.preventDefault();
     const typeOfPost = "video";
+    const videoId = ytId.youtubeId;
+    const vidThumbnail = ytInfo.coverImg;
+    const vidWidth = ytInfo.imgWidth;
+    const vidHeight = ytInfo.imgHeight;
     const video = {
       link,
       title,
@@ -42,6 +46,10 @@ export default function AddVideo() {
       grandChildCategory,
       greatGrandChildCategory,
       typeOfPost,
+      videoId,
+      vidThumbnail,
+      vidWidth,
+      vidHeight,
     };
     axios.post("http://localhost:3001/createpost", video);
     console.log(video);
