@@ -18,8 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
-  cors({
-    origin: "http://localhost:3000", //<--location of the react host we're connecting to
+  cors({ //<--location of the react host we're connecting to
     credentials: true,
   })
 );
@@ -33,7 +32,7 @@ app.use(
 app.use(cookieParser("secretcode"));
 app.use(passport.initialize());
 app.use(passport.session());
-require('./passport-config')(passport);
+require('../passport-config')(passport);
 
 //<--END OF MIDDLEWARE--->
 
@@ -68,7 +67,7 @@ app.listen(4000, () => {
 
 //webdevsimplified
 
-const initializePassport = require("./passport-config");
+const initializePassport = require("../passport-config");
 initializePassport(
   passport,
   (email) => users.find((user) => user.email === email),

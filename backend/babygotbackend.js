@@ -65,7 +65,7 @@ passportInit(
     try {
       const authUser = await userModel.findById({ _id: id });
       console.log(authUser);
-      return authUser._id || null;
+      return authUser || null;
     } catch (err) {
       console.error(err);
     }
@@ -99,7 +99,8 @@ app.post(
     else {
       req.login(user, err => {
         if (err) throw err;
-        res.send('Successfully Authenticated');
+        const name = req.user.username;
+        res.send(name);
         console.log(req.user);
         next();
       })
@@ -109,7 +110,8 @@ app.post(
 
 app.get("/user", (req, res) => {
   if (req.isAuthenticated()) {
-    res.send("user authenticated");
+    const name = req.user;
+    res.send(req.user.username);
   } else {
     res.send("no user authenticated");
   }
