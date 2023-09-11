@@ -3,6 +3,7 @@ ul {
   margin: none;
   padding: 0;
   gap: 0;
+  margin: 0;
 }
 
 div.tutdiv {
@@ -11,6 +12,7 @@ div.tutdiv {
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
   grid-template-areas: "myicon title score";
+  background-color: whitesmoke;
 }
 
 div.icondiv {
@@ -21,24 +23,35 @@ div.icondiv {
 }
 
 div.scorediv h2 {
-    padding: 0;
-    margin: -15px;
+  font-size: 20px;
+  padding: 0;
+  margin: -10px;
 }
 
 
 div.scorediv img {
     padding: 0;
     margin: 0;
+    width: 10px;
+    height: 20px;
 }
 
-img.uparrow {
+div.scorediv img.uparrow {
   transform: rotate(90deg);
+  margin-bottom: -5px;
 }
 
 img.downarrow {
   transform: rotate(-90deg);
 }
 
-div.tutdiv > h1 {
+div.tutdiv h1 {
   font-size: 20px;
 }
+
+div.tuttitle {
+  grid-area: title;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 

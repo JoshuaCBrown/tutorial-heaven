@@ -11,7 +11,7 @@ import Login from "./authentication/Login";
 import Register from "./authentication/Register";
 import axios from "axios";
 
-function App() {
+function App() { 
   const [username, setUsername] = useState(null);
   const [authStatus, setAuthStatus] = useState("none");
 
