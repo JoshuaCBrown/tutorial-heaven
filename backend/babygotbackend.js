@@ -13,6 +13,7 @@ const session = require("express-session");
 const methodOverride = require("method-override");
 
 const userModel = require("./models/UserModel");
+const resourceModel = require("./models/ResourceModel");
 const postRoute = require("./routes/createPostRoute");
 const showRoute = require("./routes/showRoute");
 const youTubeRoute = require("./routes/ytRoute");
@@ -110,8 +111,11 @@ app.post("/login", (req, res, next) => {
 
 app.get("/user", (req, res) => {
   if (req.isAuthenticated()) {
-    const name = req.user;
-    res.send(req.user.username);
+    const info = {
+      username: req.user.username,
+      userId: req.user._id,
+    };
+    res.send(info);
   } else {
     res.send("no user authenticated");
   }
@@ -125,6 +129,33 @@ app.post("/logout", (req, res) => {
     res.send("You are now logged out");
   });
 });
+
+app.patch("/postVote/:postId/:userId/:vote", async (req, res) => {
+  try {
+    const { postId, userId, vote } = req.params;
+    const voteInfo = req.body;
+
+//updates the user document based on userId to include which post was voted on
+    const updatedUser = await userModel.findOneAndUpdate(
+      { _id: userId },
+      { $push: { voted: voteInfo } },
+      { new: true }
+    );
+
+    if (!updatedVote) {
+      return res.status(404).json({ error: 'You must be logged in to do that' });
+    }
+
+    const updatedPost = await resourceModel.findOne({ _id: postId }).exec((err, data) => {
+      
+    })
+
+    return res.json(updatedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error'});
+  }
+})
 
 // app.use("/user", userRoute);
 

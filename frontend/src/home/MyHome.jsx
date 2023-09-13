@@ -6,7 +6,7 @@ import "./styles/MyHome.css";
 import ControlPanel from "./ControlPanel";
 import { categoryArrayizer } from "./categoryArrayizer";
 
-function MyHome() {
+function MyHome({ userId }) {
   const [divId, setDivId] = useState(null);
 
   const [idArrays, setIdArrays] = useState({
@@ -41,7 +41,7 @@ function MyHome() {
           <RecursiveDivRenderer data={catStructure} onItemClick={onItemClick} depth={0} expandedDivs={expandedDivs} setExpandedDivs={setExpandedDivs} divId={divId} />
         </div>
         <div className="tutorial-display">
-          <TutorialDisplay divId={divId} idArrays={idArrays}/>
+          <TutorialDisplay divId={divId} idArrays={idArrays} userId={userId} />
         </div>
         {/* <DivCreator catStructure={catStructure} /> */}
       </div>

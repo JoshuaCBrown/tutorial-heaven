@@ -6,7 +6,7 @@ import TutContainer from "./TutContainer"
 
 // const [currentSelection, setCurrentSelection] = useState("all");
 
-export default function TutorialDisplay({ divId, idArrays }) {
+export default function TutorialDisplay({ divId, idArrays, userId }) {
   const selected = divId;
   const parentIds = idArrays.parent;
   const childIds = idArrays.child;
@@ -122,7 +122,7 @@ export default function TutorialDisplay({ divId, idArrays }) {
       <ul>
         {posts.map((post) => (
           <li>
-            <TutContainer post={post} />
+            <TutContainer post={post} userId={userId} />
           </li>
         ))}
       </ul>

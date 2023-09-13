@@ -13,14 +13,16 @@ import axios from "axios";
 
 function App() { 
   const [username, setUsername] = useState(null);
-  const [authStatus, setAuthStatus] = useState("none");
+  const [authUser, setAuthUser] = useState("none");
+  const [userId, setUserId] = useState("");
 
   const IsAuth = () => {
     axios.get("http://localhost:3001/user").then((res) => {
       console.log(res.data);
-      setAuthStatus(res.data);
+      setAuthUser(res.data.username);
+      setUserId(res.data.userId);
       return (
-        <p>{res.data}</p>
+        <p>{res.data.username}</p>
       );
     });
   }
@@ -32,7 +34,8 @@ function App() {
       })
       .then((response) => {
         console.log(response.data);
-        setAuthStatus(response.data);
+        setAuthUser(response.data.username);
+        setUserId(response.data.userId);
       })
       .catch((error) => {
         console.error("Error fetching authentication", error);
@@ -52,11 +55,11 @@ function App() {
           <li>
             <Link to="auth">Login/Register</Link>
           </li>
-          <li>{authStatus}</li>
+          <li>{authUser}</li>
         </ul>
       </nav>
       <Routes>
-        <Route path="/" element={<MyHome />} />
+        <Route path="/" element={<MyHome userId={userId} />} />
         <Route path="addresource" element={<AddResource />}>
           <Route path="addvideo" element={<AddVideo />} />
           <Route path="addarticle" element={<AddArticle />} />
