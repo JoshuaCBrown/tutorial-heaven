@@ -25,7 +25,7 @@ export default function TutContainer({ post, userId }) {
   const onVote = (vote, postId) => {
     const voteInfo = {
       vote: vote,
-      postId: postId,
+      tutId: postId,
     };
     axios.patch(`http://localhost:3001/postVote/${postId}/${userId}/${vote}`, voteInfo)
       .then(res => {

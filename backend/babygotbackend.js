@@ -130,32 +130,65 @@ app.post("/logout", (req, res) => {
   });
 });
 
-app.patch("/postVote/:postId/:userId/:vote", async (req, res) => {
+app.patch("/postVote/:postId/:userId/:voteStr", async (req, res) => {
   try {
-    const { postId, userId, vote } = req.params;
+    const { postId, userId, voteStr } = req.params;
+    const userVote = parseFloat(voteStr);
     const voteInfo = req.body;
+    console.log(voteInfo);
 
-//updates the user document based on userId to include which post was voted on
-    const updatedUser = await userModel.findOneAndUpdate(
+    //updates the user document based on userId to include which post was voted on
+    const updatedUser = await userModel.findOne({ _id: userId }).then((doc) => {
+      if (doc) {
+        const voteArray = doc.voted;
+        console.log(voteArray);
+        const existingVoteObj = voteArray.find((item) => item.tutId === postId);
+        if (existingVoteObj) {
+          console.log(existingVoteObj);
+        } else {
+          console.log("no existing vote object found");
+        }
+        // if (existingVoteObj.vote === userVote) {
+        //   return res.json('Error: users only have 1 score point per post');
+        // } else {
+        //   const newVoteVal = existingVoteObj.vote + userVote;
+        //   existingVoteObj.vote = newVoteVal;
+        //   doc.save();
+        // }
+      }
+    });
+    const updatedTwoser = await userModel.findOneAndUpdate(
       { _id: userId },
       { $push: { voted: voteInfo } },
       { new: true }
     );
 
-    if (!updatedVote) {
-      return res.status(404).json({ error: 'You must be logged in to do that' });
-    }
+    // if (!updatedUser) {
+    //   return res
+    //     .status(404)
+    //     .json({ error: "You must be logged in to do that" });
+    // }
 
-    const updatedPost = await resourceModel.findOne({ _id: postId }).exec((err, data) => {
-      
-    })
+    // const updatedPost = await resourceModel
+    //   .findOne({ _id: postId })
+    //   .then((doc) => {
+    //     if (doc) {
+    //       const prevPostScore = doc.postScore;
+    //       console.log(prevPostScore);
+    //       const newPostScore = prevPostScore + userVote;
+    //       console.log(newPostScore);
+    //       doc.postScore = newPostScore;
+    //       console.log(doc.postScore);
+    //       doc.save();
+    //     }
+    //   });
 
-    return res.json(updatedUser);
+    // return res.json(updatedUser);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: 'Server error'});
+    return res.status(500).json({ error: "Server error" });
   }
-})
+});
 
 // app.use("/user", userRoute);
 
