@@ -27,7 +27,8 @@ export default function TutContainer({ post, userId }) {
       vote: vote,
       tutId: postId,
     };
-    axios.patch(`http://localhost:3001/postVote/${postId}/${userId}/${vote}`, voteInfo)
+    console.log(voteInfo);
+    axios.patch(`http://localhost:3001/postVote/${postId}/${userId}/${vote}`, voteInfo, { withCredentials: true })
       .then(res => {
         console.log('you\'ve successfully voted', res.data);
       })

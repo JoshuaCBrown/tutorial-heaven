@@ -20,6 +20,7 @@ const youTubeRoute = require("./routes/ytRoute");
 const registerRoute = require("./routes/registerRoute");
 const loginRoute = require("./routes/loginRoute");
 const userRoute = require("./routes/getUserRoute");
+const voteRoute = require("./routes/voteRoute");
 
 const baseApiUrl = "https://www.googleapis.com/youtube/v3";
 const apiKey = process.env.YOUTUBE_APIKEY;
@@ -51,7 +52,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 const passportInit = require("./passport-config");
-const { deleteOne } = require("./models/ResourceModel");
+// const { deleteOne } = require("./models/ResourceModel");
 passportInit(
   passport,
   async (email) => {
@@ -130,69 +131,25 @@ app.post("/logout", (req, res) => {
   });
 });
 
-app.patch("/postVote/:postId/:userId/:voteStr", async (req, res) => {
-  try {
-    const { postId, userId, voteStr } = req.params;
-    const userVote = parseFloat(voteStr);
-    const voteInfo = req.body;
-    console.log(voteInfo);
+app.use("/postVote", checkAuthenticated, voteRoute);
 
-    //updates the user document based on userId to include which post was voted on
-    const updatedUser = await userModel.findOne({ _id: userId }).then((doc) => {
-      if (doc) {
-        const voteArray = doc.voted;
-        console.log(voteArray);
-        const existingVoteObj = voteArray.find((item) => item.tutId === postId);
-        if (existingVoteObj) {
-          console.log(existingVoteObj);
-        } else {
-          console.log("no existing vote object found");
-        }
-        // if (existingVoteObj.vote === userVote) {
-        //   return res.json('Error: users only have 1 score point per post');
-        // } else {
-        //   const newVoteVal = existingVoteObj.vote + userVote;
-        //   existingVoteObj.vote = newVoteVal;
-        //   doc.save();
-        // }
-      }
-    });
-    const updatedTwoser = await userModel.findOneAndUpdate(
-      { _id: userId },
-      { $push: { voted: voteInfo } },
-      { new: true }
-    );
-
-    // if (!updatedUser) {
-    //   return res
-    //     .status(404)
-    //     .json({ error: "You must be logged in to do that" });
-    // }
-
-    // const updatedPost = await resourceModel
-    //   .findOne({ _id: postId })
-    //   .then((doc) => {
-    //     if (doc) {
-    //       const prevPostScore = doc.postScore;
-    //       console.log(prevPostScore);
-    //       const newPostScore = prevPostScore + userVote;
-    //       console.log(newPostScore);
-    //       doc.postScore = newPostScore;
-    //       console.log(doc.postScore);
-    //       doc.save();
-    //     }
-    //   });
-
-    // return res.json(updatedUser);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: "Server error" });
+function checkAuthenticated(req, res, next) {
+  console.log(req.isAuthenticated());
+  if (req.isAuthenticated()) {
+    return next();
   }
-});
+  return res.send(false);
+}
 
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.send(false);
+  }
+  next();
+}
 // app.use("/user", userRoute);
 
-app.listen(3001, function () {
+app.listen(3001, () => {
   console.log("Express server is running on port 3001");
 });
 

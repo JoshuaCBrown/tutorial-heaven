@@ -20,7 +20,10 @@ const createResourceSchema = new mongoose.Schema({
     immutable: true,
   },
   typeOfPost: String,
-  postScore: Number,
+  postScore: {
+    type: Number,
+    default: 1,
+  },
   vidThumbnail: String,
   vidWidth: Number,
   vidHeight: Number,
